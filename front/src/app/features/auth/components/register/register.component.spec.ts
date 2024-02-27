@@ -102,20 +102,24 @@ it('should call the register method on AuthService for a valid form submission',
     expect(component.onError).toBe(true);                        // On verifie qu'en cas d'échec le Erreur est bien déclenché
   });
   
+
+  // Ce test nous permet de savoir si le message d'error existe bien. NOT NULL
   it('should not display error message when onError is false', () => {
-    component.onError = false;
-    fixture.detectChanges();
-    const compiled: HTMLElement = fixture.nativeElement;
-    const errorElement = compiled.querySelector('.error');
-    expect(errorElement).toBeNull();
+    component.onError = false;                             // On définit la propriété `onError` sur false pour simuler "aucune" erreur
+    fixture.detectChanges();                               // On déclenche la détection de changements pour appliquer la mise à jour
+    const compiled: HTMLElement = fixture.nativeElement;   // On récupère l'élément HTML pour accéder au DOM 
+    const errorElement = compiled.querySelector('.error'); // On sélectionne l'élément avec la classe `.error` 
+    expect(errorElement).toBeNull();                       // On vérifie que l'élément `.error` n'existe pas (est `null`)
   });
 
+
+// On vérifie que le message d'erreur s'enclenche quand une erreur est détecté
   it('should display error message when onError is true', () => {
-    component.onError = true;
-    fixture.detectChanges();
-    const compiled: HTMLElement = fixture.nativeElement;
-    const errorElement = compiled.querySelector('.error');
-    expect(errorElement!.textContent).toContain('An error occurred');
+    component.onError = true;                                         // On définit la propriété `onError` sur true
+    fixture.detectChanges();                                          // On déclenche la détection de changements pour appliquer la mise à jour
+    const compiled: HTMLElement = fixture.nativeElement;              // On récupère l'élément HTML pour accéder au DOM 
+    const errorElement = compiled.querySelector('.error');            // On sélectionne l'élément avec la classe `.error` 
+    expect(errorElement!.textContent).toContain('An error occurred'); // On vérifie que le contenu textuel de l'élément contient le message d'erreur attendu.
   });
   
 });
