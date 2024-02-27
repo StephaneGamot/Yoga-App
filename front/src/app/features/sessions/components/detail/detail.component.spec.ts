@@ -5,6 +5,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule, } from '@angular/router/testing';
 import { expect } from '@jest/globals'; 
 import { SessionService } from '../../../../services/session.service';
+import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 import { DetailComponent } from './detail.component';
 
@@ -16,10 +18,11 @@ describe('DetailComponent', () => {
 
   const mockSessionService = {
     sessionInformation: {
-      admin: true,
+      admin: true ,
       id: 1
     }
   }
+  
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -42,5 +45,15 @@ describe('DetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('back should call window.history.back', () => {
+    const spy = jest.spyOn(window.history, 'back');
+    component.back();
+    expect(spy).toHaveBeenCalled();
+  });
+
+
+  
+  
 });
 
