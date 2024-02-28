@@ -5,8 +5,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule, } from '@angular/router/testing';
 import { expect } from '@jest/globals'; 
 import { SessionService } from '../../../../services/session.service';
-import { of } from 'rxjs';
-import { By } from '@angular/platform-browser';
 
 import { DetailComponent } from './detail.component';
 
@@ -18,11 +16,10 @@ describe('DetailComponent', () => {
 
   const mockSessionService = {
     sessionInformation: {
-      admin: true ,
+      admin: true,
       id: 1
     }
   }
-  
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -51,9 +48,6 @@ describe('DetailComponent', () => {
     component.back();
     expect(spy).toHaveBeenCalled();
   });
-
-
-  
   
 });
 
