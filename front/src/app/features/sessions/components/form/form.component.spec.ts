@@ -70,11 +70,13 @@ describe('FormComponent', () => {
     fixture.detectChanges();
   });
 
-
+// (Test Unitaire)
   it('should create', () => {
     expect(component).toBeTruthy();                        // On vérifie que l'instance du composant a bien été créée
   });
 
+
+  // (Test Unitaire)
   it('should initialize sessionForm for new session', () => {
     expect(component.sessionForm).toBeDefined();           // On vérifie que l'objet sessionForm est défini
     expect(component.onUpdate).toBeFalsy();                // On vérifie que le composant n'est pas en mode mise à jour
@@ -87,7 +89,7 @@ describe('FormComponent', () => {
   });
 
 
-  //  On initialise le formulaire pour la création d'une session avec des champs vides
+  //  On initialise le formulaire pour la création d'une session avec des champs vides (Test Unitaire)
   it('should initialize form for session creation with empty fields', () => {
     component.onUpdate = false;                                      // On définit le composant pour ne pas être en mode mise à jour
     fixture.detectChanges();                                         // On applique les changements détectés pour s'assurer que le formulaire est réinitialisé
@@ -100,7 +102,7 @@ describe('FormComponent', () => {
   });
 
 
-  // On appele la méthode create sur sessionApiService lors de la soumission du formulaire pour la création
+  // On appele la méthode create sur sessionApiService lors de la soumission du formulaire pour la création (test d'intégration )
   it('should call create method on sessionApiService when form is submitted for creation', () => {
     component.onUpdate = false;                                 // On définit le composant pour ne pas être en mode mise à jour
     fixture.detectChanges();                                    // On applique les changements détectés pour préparer le formulaire à la soumission

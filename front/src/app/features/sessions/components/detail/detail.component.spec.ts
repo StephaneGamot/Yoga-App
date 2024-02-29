@@ -39,10 +39,14 @@ describe('DetailComponent', () => {
     fixture.detectChanges();
   });
 
+
+  // (Test Unitaire)
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+
+  // (Test Unitaire)
   it('back should call window.history.back', () => {
     const spy = jest.spyOn(window.history, 'back');
     component.back();

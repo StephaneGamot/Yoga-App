@@ -82,7 +82,7 @@ describe('LoginComponent', () => {
     expect(component.onError).toBe(true);                // On verifie qu'en cas d'échec le Erreur est bien déclenché
   });
   
-// On vérifie que la methode est bien appelé quand on clique sur submit 
+// On vérifie que la methode est bien appelé quand on clique sur submit (Test d'Intégration)
   it('should track the login method call', () => {
     const authService = (component as any).authService;  // En créant une const cela permet au test d'accéder à authService.
     const loginSpy = jest.spyOn(authService, 'login').mockReturnValue(of({})); // Création d'un espion qui surveille login, qui nous renvoie un objet vide (simulation)

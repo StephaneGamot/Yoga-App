@@ -38,6 +38,8 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
+
+  // (Test Unitaire)
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -49,7 +51,7 @@ describe('RegisterComponent', () => {
   });
 
 
-  // Il vérifie la validité du mail
+  // Il vérifie la validité du mail (Test Unitaire)
   it('email field validity', () => {
     let email = component.form.controls['email'];    // On crée une variable qui pemert d'acceder au champ Email
     expect(email.valid).toBeFalsy();                 // si il est vide il doit être faux
@@ -60,7 +62,7 @@ describe('RegisterComponent', () => {
   });
   
 
-  // On teste que les 4 champs existent
+  // On teste que les 4 champs existent (Test Unitaire)
   it('should create form with four controls', () => {
     expect(component.form.contains('firstName')).toBeTruthy();  // Le champ firstName existe
     expect(component.form.contains('lastName')).toBeTruthy();   // Le champ lastName existe
@@ -69,7 +71,7 @@ describe('RegisterComponent', () => {
 });
 
 
-// On teste qu'aucun champs ne soit vide 
+// On teste qu'aucun champs ne soit vide (Test Unitaire)
 it('should not submit form if it is invalid', () => {
     component.form.controls['firstName'].setValue('');  // Création d'une valeur vide ''
     component.form.controls['lastName'].setValue('');   // Création d'une valeur vide ''
@@ -81,7 +83,7 @@ it('should not submit form if it is invalid', () => {
 });
 
 
-// On veut s'assurer que le composant tente bien de s'enregistrer via le service quand le formulaire est valide.
+// On veut s'assurer que le composant tente bien de s'enregistrer via le service quand le formulaire est valide. (Test d'Intégration)
 it('should call the register method on AuthService for a valid form submission', () => {
   const authServiceMock = TestBed.inject(AuthService);            // On injecte le AuthService dans le test pour pouvoir interagir avec
   const registerSpy = jest.spyOn(authServiceMock,'register').mockReturnValue(of(void 0)); // Création d'un espion, on simule une réponse de type void 
@@ -103,7 +105,7 @@ it('should call the register method on AuthService for a valid form submission',
   });
   
 
-  // Ce test nous permet de savoir si le message d'error existe bien. NOT NULL
+  // Ce test nous permet de savoir si le message d'error existe bien. NOT NULL (Test d'Intégration)
   it('should not display error message when onError is false', () => {
     component.onError = false;                             // On définit la propriété `onError` sur false pour simuler "aucune" erreur
     fixture.detectChanges();                               // On déclenche la détection de changements pour appliquer la mise à jour
@@ -113,7 +115,7 @@ it('should call the register method on AuthService for a valid form submission',
   });
 
 
-// On vérifie que le message d'erreur s'enclenche quand une erreur est détecté
+// On vérifie que le message d'erreur s'enclenche quand une erreur est détecté (Test Unitaire)
   it('should display error message when onError is true', () => {
     component.onError = true;                                         // On définit la propriété `onError` sur true
     fixture.detectChanges();                                          // On déclenche la détection de changements pour appliquer la mise à jour

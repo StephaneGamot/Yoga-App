@@ -23,25 +23,24 @@ describe('SessionsService', () => {
   });
 
 
-  // On vérifie que le service a bien été créé
+  // On vérifie que le service a bien été créé  (test unitaire )
   it('should be created', () => {
     expect(service).toBeTruthy();                           // On verifie qu'il répond    
   });
 
 
-// On teste la récupération de toutes les sessions
+// On teste la récupération de toutes les sessions (test d'intégration )
   it('should retrieve all sessions', () => {
     service.all().subscribe(sessions => {                   // On appelle la méthode all() du service et on souscrit au résultat
       expect(sessions).toBeTruthy();                        // On vérifie simplement que la réponse est "truthy"
     });
-
     const req = httpMock.expectOne(service['pathService']);
     expect(req.request.method).toBe('GET');                 // On simule une réponse HTTP vide pour le test
     req.flush([]);                                          // On simule une réponse vide pour ce test
   });
 
 
-  // On vérifie que le détail d'une session peut être récupéré par un ID
+  // On vérifie que le détail d'une session peut être récupéré par un ID  (test d'intégration )
   it('should retrieve session detail by id', () => {
     const testId = '123';                                   // Création d'un ID fictif pour le test
     service.detail(testId).subscribe(session => {           // On appelle la méthode detail() du service avec cet ID et souscrit au résultat
