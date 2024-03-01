@@ -53,5 +53,7 @@ describe('DetailComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
   
+  
+  
 });
 
