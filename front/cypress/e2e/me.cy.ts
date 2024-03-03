@@ -28,7 +28,7 @@ describe('user information test', () => {
         createdAt: '2024-03-01',
         updatedAt: '2024-03-01',
       },
-    }).as('getUserInfo');                       
+    }).as('getUserInfo');      
 
     cy.get('input[formControlName=email]').type('yoga@studio.com');            // Remplissage et soumission du formulaire avec l'Email
     cy.get('input[formControlName=password]').type('test!1234{enter}{enter}'); // Remplissage et soumission du formulaire avec le mot de passe
@@ -44,10 +44,34 @@ describe('user information test', () => {
     cy.wait('@getUserInfo');                     // On attend que userinfo ( plus haut) se remplisse
     cy.url().should('include', '/me');           // On vérifie qu'il nous envoie bien vers /me
 
-    cy.contains('Name: ').should('be.visible');  // On vérifie que l'élément Name est bien visible
-    cy.contains('Email:').should('be.visible');  // On vérifie que l'élément Email est bien visible
+    cy.contains('User information')
+    cy.contains('Name: Stéphane GMT').should('be.visible');  // On vérifie que l'élément Name est bien visible
+    cy.contains('Email: yoga@studio.com').should('be.visible');  // On vérifie que l'élément Email est bien visible
+    cy.should('not.contain', 'Delete')
+    cy.contains('You are admin')
+    cy.contains('Create at: March 1, 2024').should('be.visible');
+    cy.contains('Last update: March 1, 2024').should('be.visible');
   });
 
+   // on va sur la page /me, on peut y récuperer les informations d'une cliente
+   it('should go to to me and get information about a client', () => {
+const clientDetails = {
+    id: 1,
+    username: 'userName',
+    firstName: 'Stéphane',
+    lastName: 'Gmt',
+    email: 'yoga@studio.com',
+    admin: false,
+    createdAt: '2024-03-01',
+    updatedAt: '2024-03-01',
+}
+cy.intercept ('GET', 'api/user/1', {
+    body: clientDetails
+})
+    cy.contains('Account').click()
+    cy.contains('Delete my account')
+
+  });
 
   // On doit pouvoir revenir en arriere 
   it('should go back to sessions', () => {
@@ -58,4 +82,6 @@ describe('user information test', () => {
     cy.get('button.mat-icon-button').click();   // On clique sur le lien "Back",
     cy.url().should('include', '/sessions');    // On vérifie qu'il nous envoie bien vers /sessions
   });
+  
+
 });
