@@ -80,9 +80,9 @@ it('Logout successfull', () => {
     cy.intercept('POST', '/api/session', {
       body: {
         id: 1,
-        name: 'Hard Workout',
-        description: 'New session for expert!',
-        date: '2023-05-15T00:00:00.000+00:00',
+        name: 'Cours Yoga niveau 2',
+        description: 'Réservé pour Yogi pratiquant',
+        date: '2024-03-01T00:00:00.000+00:00',
         teacher_id: 1,
       },
     });
@@ -90,9 +90,9 @@ it('Logout successfull', () => {
     cy.intercept('GET', '/api/session', {
       body: [{
         id: 1,
-        name: 'Hard Workout',
-        description: 'New session for expert!',
-        date: '2023-05-15T00:00:00.000+00:00',
+        name: 'Cours Yoga niveau 2',
+        description: 'Réservé pour Yogi pratiquant',
+        date: '2024-03-01T00:00:00.000+00:00',
         teacher_id: 1,
         users: []
       }]
