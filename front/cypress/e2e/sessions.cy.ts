@@ -2,10 +2,12 @@
 
 describe('Sessions test', () => {
 
+/* The `beforeEach` function in the Cypress test is setting up a scenario before each test case runs.
+In this specific case: */
     beforeEach(() => {
         cy.visit('/login');
         cy.intercept('POST', '/api/auth/login', {
-            statusCode: 200, // On s'ssure que la réponse simulée indique 200
+            statusCode: 200, 
             body: {
               id: 1,
               username: 'userName',
@@ -56,34 +58,45 @@ it('Logout successfull', () => {
       },
     };
   
-    beforeEach(() => {
-      cy.visit('/login');
-  
-      cy.intercept('POST', '/api/auth/login', {
-        body: {
-          id: 1,
-          username: 'username',
-          firstName: 'firstName',
-          lastName: 'lastName',
-          admin: false,
-        },
-      });
-  
-      cy.intercept('GET', '/api/teacher/2', {
-        body: [{ id: 2, firstName: 'Hélène', lastName: 'THIERCELIN' }],
-      });
-  
-      cy.intercept('GET', '/api/session', {
-        body: [
-          {
-            id: 1,
-            name: 'session de yoga',
-            description: 'On fait du bien à son corps',
-            teacher_id: 2,
-            users: [],
-          },
-        ],
-      });
+      beforeEach(() => {
+    cy.visit('/login');
+
+    cy.intercept('POST', '/api/auth/login', {
+      body: {
+        id: 1,
+        username: 'yoga@studio.com',
+        firstName: 'firstName',
+        lastName: 'lastName',
+        admin: false
+      },
+    });
+
+    cy.intercept('GET', '/api/teacher', { 
+      body: [
+        { id: 1, firstName: 'Margot', lastName: 'DELAHAYE' }
+      ] 
+    });
+
+    cy.intercept('POST', '/api/session', {
+      body: {
+        id: 1,
+        name: 'Hard Workout',
+        description: 'New session for expert!',
+        date: '2023-05-15T00:00:00.000+00:00',
+        teacher_id: 1,
+      },
+    });
+
+    cy.intercept('GET', '/api/session', {
+      body: [{
+        id: 1,
+        name: 'Hard Workout',
+        description: 'New session for expert!',
+        date: '2023-05-15T00:00:00.000+00:00',
+        teacher_id: 1,
+        users: []
+      }]
+    });
   
       cy.intercept('GET', '/api/session/1', yogaSessionResponse);
   
