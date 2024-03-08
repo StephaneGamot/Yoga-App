@@ -30,10 +30,10 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    AuthController(AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder,
-            JwtUtils jwtUtils,
-            UserRepository userRepository) {
+    public AuthController(AuthenticationManager authenticationManager,
+                          PasswordEncoder passwordEncoder,
+                          JwtUtils jwtUtils,
+                          UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.passwordEncoder = passwordEncoder;
