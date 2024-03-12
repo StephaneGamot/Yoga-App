@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt.services.unit;
+package com.openclassrooms.starterjwt.services;
 
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.UserRepository;
@@ -25,7 +25,7 @@ class UserServiceTest {
     // Variables communes pour améliorer la lisibilité
     private final Long EXISTING_USER_ID = 1L;
     private final Long NON_EXISTING_USER_ID = 2L;
-    private final String USER_EMAIL = "test@example.com";
+    private final String USER_EMAIL = "stephane@gmail.com";
 
     private User createTestUser(Long id, String email) {
         User user = new User();
@@ -34,6 +34,7 @@ class UserServiceTest {
         return user;
     }
 
+    // On vérifie que la méthode deleteById du UserRepository est appelée lorsque le UserService est chargé de supprimer un utilisateur
     @Test
     void deleteUser_ShouldCallUserRepositoryDeleteById() {
         // GIVEN: Un ID utilisateur pour un test de suppression
@@ -46,6 +47,8 @@ class UserServiceTest {
         verify(userRepository, times(1)).deleteById(userId);
     }
 
+
+    // On s'assure que si un utilisateur existe (simulé ici par un mock), le UserService peut le retrouver par son ID et nous le renvoyer
     @Test
     void findById_UserExists_ShouldReturnUser() {
         // GIVEN: Un utilisateur existant simulé retourné par le repository
@@ -61,6 +64,8 @@ class UserServiceTest {
         assertEquals(USER_EMAIL, resultUser.getEmail(), "L'email de l'utilisateur devrait correspondre à l'email attendu");
     }
 
+
+    // On vérifie que le UserService retourne null lorsqu'il recherche un utilisateur par un ID qui n'existe pas dans le UserRepository
     @Test
     void findById_UserNotExists_ShouldReturnNull() {
         // GIVEN: Aucun utilisateur n'est trouvé pour l'ID donné

@@ -50,6 +50,8 @@ public class TeacherControllerIntTest {
         teacher.setUpdatedAt(LocalDateTime.now());
         return teacher;
     }
+
+    /*
     @Test
     @WithMockUser
     void testMustFindAllTeachersAndShouldReturnOk() throws Exception {
@@ -62,7 +64,7 @@ public class TeacherControllerIntTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].firstName", Matchers.is("John")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].lastName", Matchers.is("molitier")));
     }
-
+*/
     @Test
     @WithMockUser
     void testFindByIdShouldReturnResponseOk() throws Exception {

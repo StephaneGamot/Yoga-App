@@ -11,8 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserMapperUnitTest {
@@ -35,7 +34,7 @@ public class UserMapperUnitTest {
         userDto.setEmail(VALID_EMAIL);
         userDto.setLastName(USER_LAST_NAME);
         userDto.setFirstName(USER_FIRST_NAME);
-        // Note: Le mot de passe n'est généralement pas inclus dans un DTO retourné
+
         return userDto;
     }
 
@@ -132,6 +131,8 @@ public class UserMapperUnitTest {
         // then
         assertNull(result, "Converting a null entity list to DTO list should result in null.");
     }
+
+
 
 
 

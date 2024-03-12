@@ -49,7 +49,9 @@ class AuthTokenFilterTest {
     private final String invalidToken = "Bearer invalidToken123";
     private final String username = "testUser";
 
+
     @Test
+        // Si le token est valide, l'utilisateur doit être authentifié correctement
     void whenTokenIsValid_thenAuthenticateUser() throws ServletException, IOException {
         // GIVEN
         when(request.getHeader("Authorization")).thenReturn(validToken);
@@ -67,6 +69,7 @@ class AuthTokenFilterTest {
     }
 
     @Test
+        // Si le token n'est pas valide, l'authentification ne doit pas se faire.
     void whenTokenIsInvalid_thenDoNotAuthenticate() throws ServletException, IOException {
         // GIVEN
         when(request.getHeader("Authorization")).thenReturn(invalidToken);
@@ -81,6 +84,7 @@ class AuthTokenFilterTest {
     }
 
     @Test
+        // Si aucun token n'est fourni, le processus doit continuer sans essayer d'authentifier.
     void whenNoTokenProvided_thenProceedWithoutAuthentication() throws ServletException, IOException {
         // GIVEN
         when(request.getHeader("Authorization")).thenReturn(null);
@@ -94,6 +98,7 @@ class AuthTokenFilterTest {
     }
 
     @Test
+        // Si la validation du token lance une exception, le processus doit quand même continuer.
     void whenTokenThrowsException_thenProceed() throws ServletException, IOException {
         // GIVEN
         when(request.getHeader("Authorization")).thenReturn(validToken);
@@ -104,6 +109,6 @@ class AuthTokenFilterTest {
 
         // THEN
         verify(filterChain).doFilter(request, response);
-        // Aucune autre vérification n'est nécessaire ici car on teste simplement la capacité de l'application à continuer malgré l'exception.
+
     }
 }

@@ -40,6 +40,8 @@ class UserDetailsImplTest {
         assertTrue(authorities.isEmpty(), "La collection d'autorités devrait être vide.");
     }
 
+
+    // On teste les propriétés qui retournent toujours vrai, démontrant que le compte est toujours actif et valide
     @Test
     void testIsAccountNonExpired_AlwaysReturnsTrue() {
         // GIVEN: Création d'un UserDetails vide
@@ -54,21 +56,21 @@ class UserDetailsImplTest {
 
     @Test
     void testIsAccountNonLocked_AlwaysReturnsTrue() {
-        // Même schéma que le test précédent
+        // GIVEN: Création d'un UserDetails vide
         UserDetailsImpl userDetails = createUserDetails(null, null, false);
         assertTrue(userDetails.isAccountNonLocked(), "Le compte devrait toujours être considéré comme non verrouillé.");
     }
 
     @Test
     void testIsCredentialsNonExpired_AlwaysReturnsTrue() {
-        // Même schéma que le test précédent
+        // GIVEN: Création d'un UserDetails vide
         UserDetailsImpl userDetails = createUserDetails(null, null, false);
         assertTrue(userDetails.isCredentialsNonExpired(), "Les identifiants devraient toujours être considérés comme non expirés.");
     }
 
     @Test
     void testIsEnabled_AlwaysReturnsTrue() {
-        // Même schéma que le test précédent
+        // GIVEN: Création d'un UserDetails vide
         UserDetailsImpl userDetails = createUserDetails(null, null, false);
         assertTrue(userDetails.isEnabled(), "Le compte devrait toujours être considéré comme activé.");
     }
