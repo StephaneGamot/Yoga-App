@@ -22,8 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
@@ -39,6 +38,7 @@ public class AuthControllerUnitTest {
     private static final String FirstName = "Stephane";
     private static final String LastName = "Gmt";
     private static final boolean IsAdmin = false;
+    private static final String JwtToken = "JwtToken";
 
 
     // Mock des dépendances du AuthController
@@ -138,6 +138,9 @@ public class AuthControllerUnitTest {
         // Assert   On vérifie les assertions pour s'assurer que la réponse est correcte
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("User registered successfully!", ((MessageResponse) response.getBody()).getMessage());
+        assertNotNull(response);
+        assertInstanceOf(MessageResponse.class, response.getBody());
+        MessageResponse messageResponse = (MessageResponse) response.getBody();
 
         // On vérifie que la méthode save a été appelée sur userRepository
         verify(userRepository).save(any(User.class));
@@ -161,7 +164,7 @@ public class AuthControllerUnitTest {
         // Assert   On vérifie les assertions pour s'assurer que la réponse est correcte
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Error: Email is already taken!", ((MessageResponse) response.getBody()).getMessage());
-
+        assertNotNull(response);
     }
 
 }

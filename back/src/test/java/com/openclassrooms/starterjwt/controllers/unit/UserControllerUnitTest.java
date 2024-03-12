@@ -5,11 +5,13 @@ import com.openclassrooms.starterjwt.dto.UserDto;
 import com.openclassrooms.starterjwt.mapper.UserMapper;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.services.UserService;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -169,4 +172,17 @@ public class UserControllerUnitTest {
         // ASSERT On vérifie que la réponse a le statut HTTP "BAD_REQUEST"
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
+/*
+    @Test
+    public void whenUserServiceThrowsException_thenResponseIsInternalServerError() {
+        given(userService.findById(anyLong())).willThrow(new RuntimeException("Service exception"));
+
+        ResponseEntity<?> response = userController.findById("1");
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+*/
+
+
+
 }

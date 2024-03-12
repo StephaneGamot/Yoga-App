@@ -2,6 +2,7 @@ package com.openclassrooms.starterjwt.controllers.integration;
 
 
 import com.openclassrooms.starterjwt.models.User;
+import com.openclassrooms.starterjwt.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,6 +13,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.validation.ConstraintViolationException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerIntTest {
@@ -20,6 +25,9 @@ public class UserControllerIntTest {
     public static final String API_USER_ID_URL = "/api/user/{id}";
     public static final Long VALID_USER_ID = 1L;
     public static final String INVALID_USER_ID = "nanID";
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private MockMvc mockMvc; // MockMvc permet de simuler des requêtes HTTP
@@ -62,5 +70,17 @@ public class UserControllerIntTest {
     void deleteUserById_WhenUserLacksAuthority_ThenReturnsUnauthorized() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete(API_USER_ID_URL, VALID_USER_ID))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
+
+    @Test
+    public void whenSavedWithTooLongEmail_thenConstraintViolationException() {
+        User user = new User()
+                .setEmail("thisEmailIsWayTooLongToBeConsideredValid@example.com")
+                .setPassword("password")
+                .setFirstName("John")
+                .setLastName("Doe")
+                .setAdmin(false);
+
+        assertThrows(ConstraintViolationException.class, () -> userRepository.saveAndFlush(user));
     }
 }
