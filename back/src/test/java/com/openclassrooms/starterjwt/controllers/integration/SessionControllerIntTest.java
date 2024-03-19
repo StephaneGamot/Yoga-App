@@ -50,7 +50,7 @@ public class SessionControllerIntTest {
         sessionRepository.save(session1);
         sessionRepository.save(session2);
 
-        // On imule une requête HTTP GET vers l'URL de base des sessions, en spécifiant ce que l'on attend
+        // On stimule une requête HTTP GET vers l'URL de base des sessions, en spécifiant ce que l'on attend
         mockMvc.perform(MockMvcRequestBuilders.get(SESSION_BASE_URL).contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
                 //   .andExpect(MockMvcResultMatchers.jsonPath("$.length()", Matchers.is(20)))
 

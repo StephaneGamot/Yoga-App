@@ -126,7 +126,7 @@ class SessionServiceTest {
     void whenRemovingUserFromSession_thenUserIsRemoved() {
         // Configuration
         Session session = createTestSession();
-        User user = new User(); // Assumez une méthode helper pour créer un utilisateur test
+        User user = new User();
         user.setId(VALID_USER_ID);
         session.getUsers().add(user);
         when(sessionRepository.findById(VALID_SESSION_ID)).thenReturn(Optional.of(session));
@@ -152,7 +152,7 @@ class SessionServiceTest {
     @Test
     void whenRemovingNonParticipantUser_thenThrowsBadRequestException() {
         // Configuration
-        Session session = createTestSession(); // La session ne contient pas l'utilisateur
+        Session session = createTestSession();
         when(sessionRepository.findById(VALID_SESSION_ID)).thenReturn(Optional.of(session));
 
         // Action & Vérification
@@ -165,7 +165,7 @@ class SessionServiceTest {
     @Test
     void whenCreatingSessionWithInvalidData_thenBehaviorIsAsExpected() {
         // Configuration
-        Session invalidSession = new Session(); // Assumez une session invalide (ex: sans nom)
+        Session invalidSession = new Session();
 
         // Action
         Session result = sessionService.create(invalidSession);
@@ -180,7 +180,7 @@ class SessionServiceTest {
         // Configuration
         Session session = createTestSession();
         User newUser = new User();
-        newUser.setId(3L); // ID différent pour le nouveau utilisateur
+        newUser.setId(3L);                           // ID différent pour le nouveau utilisateur
         when(sessionRepository.findById(VALID_SESSION_ID)).thenReturn(Optional.of(session));
         when(userRepository.findById(3L)).thenReturn(Optional.of(newUser));
 

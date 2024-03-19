@@ -54,6 +54,6 @@ describe('Login spec', () => {
     cy.get('input[formControlName=email]').type('stephane@gmail.com');
     cy.get('input[formControlName=password]').type(`${' '}{enter}{enter}`);
 
-    cy.get('.error').should('be.visible');// On s'assure que le message d'erreur est bien visible
+    cy.get('.error').should('be.visible');              // On s'assure que le message d'erreur est bien visible
   });
 });

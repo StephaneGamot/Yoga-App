@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import javax.transaction.Transactional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -23,7 +26,8 @@ public class AuthControllerIntTest {
     private static final String REGISTER_URL = "/api/auth/register";
 
     // On teste l'enregistrement réussi d'un nouvel utilisateur
-  /*  @Test
+   @Test
+   @Transactional
     public void whenRegisteringValidUser_thenReturnsSuccessMessage() throws Exception {
         // Création d'une nouvelle requête d'inscription avec des données valides
         SignupRequest signupRequest = new SignupRequest();
@@ -39,8 +43,9 @@ public class AuthControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())                  // On vérifie que le statut HTTP de la réponse est 200
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("User registered successfully!")); // On vérifie que le message dans le corps de la réponse correspond bien à l'attente
     }
-*/
+
     @Test
+    @Transactional
     public void whenRegisteringUserWithExistingEmail_thenReturnsBadRequest() throws Exception {
         // Préparation de la requête d'inscription avec une adresse email déjà existante dans la base de donnée
         SignupRequest signupRequest = new SignupRequest();
@@ -56,5 +61,7 @@ public class AuthControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Error: Email is already taken!"));
     }
+
+
 
 }

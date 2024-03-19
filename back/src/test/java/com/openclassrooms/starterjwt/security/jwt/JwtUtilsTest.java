@@ -113,7 +113,7 @@ class JwtUtilsTest {
         // Génération d'un token expiré
         String token = Jwts.builder()
                 .setSubject(testUsername)
-                .setIssuedAt(new Date(System.currentTimeMillis() - 3600000)) // Temps d'émission dans le passé
+                .setIssuedAt(new Date(System.currentTimeMillis() - 3600000))   // Temps d'émission dans le passé
                 .setExpiration(new Date(System.currentTimeMillis() - 1800000)) // Temps d'expiration dans le passé
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();

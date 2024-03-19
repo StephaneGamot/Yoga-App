@@ -83,6 +83,16 @@ it('should not submit form if it is invalid', () => {
 });
 
 
+// On vérifie que le message d'erreur s'enclenche quand une erreur est détecté (Test Unitaire)
+it('should display error message when onError is true', () => {
+  component.onError = true;                                         // On définit la propriété `onError` sur true
+  fixture.detectChanges();                                          // On déclenche la détection de changements pour appliquer la mise à jour
+  const compiled: HTMLElement = fixture.nativeElement;              // On récupère l'élément HTML pour accéder au DOM 
+  const errorElement = compiled.querySelector('.error');            // On sélectionne l'élément avec la classe `.error` 
+  expect(errorElement!.textContent).toContain('An error occurred'); // On vérifie que le contenu textuel de l'élément contient le message d'erreur attendu.
+});
+
+
 // On veut s'assurer que le composant tente bien de s'enregistrer via le service quand le formulaire est valide. (Test d'Intégration)
 it('should call the register method on AuthService for a valid form submission', () => {
   const authServiceMock = TestBed.inject(AuthService);            // On injecte le AuthService dans le test pour pouvoir interagir avec
@@ -115,13 +125,5 @@ it('should call the register method on AuthService for a valid form submission',
   });
 
 
-// On vérifie que le message d'erreur s'enclenche quand une erreur est détecté (Test Unitaire)
-  it('should display error message when onError is true', () => {
-    component.onError = true;                                         // On définit la propriété `onError` sur true
-    fixture.detectChanges();                                          // On déclenche la détection de changements pour appliquer la mise à jour
-    const compiled: HTMLElement = fixture.nativeElement;              // On récupère l'élément HTML pour accéder au DOM 
-    const errorElement = compiled.querySelector('.error');            // On sélectionne l'élément avec la classe `.error` 
-    expect(errorElement!.textContent).toContain('An error occurred'); // On vérifie que le contenu textuel de l'élément contient le message d'erreur attendu.
-  });
   
 });

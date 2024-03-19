@@ -45,6 +45,14 @@ Ensure you have the following installed:
 4. Run the database setup script found in the `resources/sql` directory to create the required database structure.
 5. Enter your database connection details in the `application.properties` configuration file.
 
+### Backend Setup
+
+1. Navigate to the backend project directory
+2. Install Maven dependencies:
+    ```
+    mvn install
+    ```
+
 ### Testing
 
 #### Frontend Testing

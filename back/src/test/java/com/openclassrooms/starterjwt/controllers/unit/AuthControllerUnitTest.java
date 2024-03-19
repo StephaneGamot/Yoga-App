@@ -20,8 +20,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Objects;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.any;
@@ -29,7 +31,6 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerUnitTest {
-
 
     // Définition des constantes pour les réutiliser dans les tests
     private static final Long UserId = 1L;
@@ -89,7 +90,7 @@ public class AuthControllerUnitTest {
         given(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(Email, Password)))
                 .willReturn(authenticationToken);
         given(jwtUtils.generateJwtToken(authenticationToken))
-                .willReturn("JwtToken");
+                .willReturn(JwtToken);
         given(userRepository.findByEmail(Email))
                 .willReturn(Optional.of(user));
 
@@ -103,14 +104,16 @@ public class AuthControllerUnitTest {
         JwtResponse responseBody = (JwtResponse) response.getBody();
 
         // Assert   On vérifie les assertions pour s'assurer que la réponse est correcte
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(Email, responseBody.getUsername());
-        assertEquals(FirstName, responseBody.getFirstName());
-        assertEquals(LastName, responseBody.getLastName());
-        assertEquals(UserId, responseBody.getId());
-        assertEquals(IsAdmin, responseBody.getAdmin());
-        assertEquals("Bearer", responseBody.getType());
-        assertNotNull(responseBody.getToken());
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseBody).isNotNull();
+        assertThat(responseBody.getUsername()).isEqualTo(Email);
+        assertThat(responseBody.getFirstName()).isEqualTo(FirstName);
+        assertThat(responseBody.getLastName()).isEqualTo(LastName);
+        assertThat(responseBody.getId()).isEqualTo(UserId);
+        assertThat(responseBody.getAdmin()).isEqualTo(IsAdmin);
+        assertThat(responseBody.getType()).isEqualTo("Bearer");
+        assertThat(responseBody.getToken()).isNotNull();
+
     }
 
     @Test
@@ -136,11 +139,12 @@ public class AuthControllerUnitTest {
         ResponseEntity<?> response = authController.registerUser(signUpRequest);
 
         // Assert   On vérifie les assertions pour s'assurer que la réponse est correcte
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("User registered successfully!", ((MessageResponse) response.getBody()).getMessage());
-        assertNotNull(response);
-        assertInstanceOf(MessageResponse.class, response.getBody());
-        MessageResponse messageResponse = (MessageResponse) response.getBody();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response).isNotNull();
+        assertThat(response.getBody()).isInstanceOf(MessageResponse.class);
+        MessageResponse messageResponse = (MessageResponse) response.getBody();     // On récupère le corps de la réponse après avoir vérifié son type
+        assert messageResponse != null;
+        assertThat(messageResponse.getMessage()).isEqualTo("User registered successfully!");
 
         // On vérifie que la méthode save a été appelée sur userRepository
         verify(userRepository).save(any(User.class));
@@ -162,9 +166,10 @@ public class AuthControllerUnitTest {
         ResponseEntity<?> response = authController.registerUser(signUpRequest);
 
         // Assert   On vérifie les assertions pour s'assurer que la réponse est correcte
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Error: Email is already taken!", ((MessageResponse) response.getBody()).getMessage());
-        assertNotNull(response);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response).isNotNull();
+        assertThat(response.getBody()).isInstanceOf(MessageResponse.class);
+        assertThat(((MessageResponse) Objects.requireNonNull(response.getBody())).getMessage()).isEqualTo("Error: Email is already taken!");
     }
 
 }
